@@ -24,8 +24,6 @@ function signUpPage() {
 
 let myObj;
 
-let registeredUser = [];
-
 function signUp() {
   if (
     password.value === confirmPassword.value &&
@@ -78,11 +76,10 @@ function signUp() {
 let loginPass = document.getElementById("loginPass");
 let loginEm = document.getElementById("loginEm");
 function login() {
-  loading.style.display = "block";
+  loadingL.style.display = "block";
 
   setTimeout(() => {
-    loading.style.display = "none";
-
+    loadingL.style.display = "none";
     // Get the email entered on the login page
   let loginEmail = loginEm.value;
   console.log(loginEmail);
@@ -101,10 +98,6 @@ function login() {
     window.location.href = "dashboard.html";
 
     window.localStorage.setItem('currentUser', JSON.stringify(user));
-
-    // Display the user's full name on the dashboard page
-    // let dashboardWelcome = document.getElementById('welcome');
-    // dashboardWelcome.innerHTML = `<h1 class="dashboard-welcome">Welcome, ${user.fullname}!</h1>`;
   } else {
     logInMessage.innerHTML = `
       <p id="failed-msg">Login failed! Please check your email and password.</p>
