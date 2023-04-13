@@ -6,7 +6,7 @@ let loginBox = document.getElementById("login-box");
 let signUpBox = document.getElementById("sign-up-box");
 let loadingDiv = document.getElementById("loading-div");
 let loadingDivL = document.getElementById("loading-divL");
-let fullNameInput = document.getElementById("f-name");
+let userNameInput = document.getElementById("user-name");
 let emailInput = document.getElementById("user-email");
 let passwordInput = document.getElementById("user-password");
 let confirmPasswordInput = document.getElementById("confirm-password");
@@ -33,15 +33,15 @@ function signUpPage() {
 
 // Handle the sign up process
 function signUp() {
-  // Check if the password and confirm password fields match and the full name and email fields are not empty
+  // Check if the password and confirm password fields match and the Username and email fields are not empty
   if (
     passwordInput.value === confirmPasswordInput.value &&
-    fullNameInput.value != "" &&
+    userNameInput.value != "" &&
     emailInput.value != ""
   ) {
     // Create a user object with the input values
     let user = {
-      fullname: fullNameInput.value,
+      username: userNameInput.value,
       email: emailInput.value,
       password: passwordInput.value,
       confirmPassword: confirmPasswordInput.value,
@@ -69,7 +69,7 @@ function signUp() {
     }, 3000);
 
     // Clear the input fields
-    fullNameInput.value = "";
+    userNameInput.value = "";
     emailInput.value = "";
     passwordInput.value = "";
     confirmPasswordInput.value = "";

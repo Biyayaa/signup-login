@@ -1,7 +1,7 @@
 // import { user } from "./script.js";
 
 let dashboardWelcome = document.getElementById("welcome");
-// dashboardWelcome.innerHTML = `<h1 class="dashboard-welcome"> Welcome, ${user.fullname}! <h1>`;
+// dashboardWelcome.innerHTML = `<h1 class="dashboard-welcome"> Welcome, ${user.username}! <h1>`;
 
 
 // Get the welcome div and the logout button
@@ -17,7 +17,7 @@ if (!currentUser) {
   }
 
 // Display the welcome message with the current user's name
-dashboardWelcome.innerHTML = `Welcome, ${currentUser.fullname}!`;
+dashboardWelcome.innerHTML = `Welcome, ${currentUser.username}!`;
 
 // Handle the logout process
 logoutBtn.addEventListener("click", () => {
