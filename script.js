@@ -1,5 +1,5 @@
 // Hide the login page on load of the page
-document.getElementById("login-box").style.display = "none";
+document.getElementById("sign-up-box").style.display = "none";
 
 // Get the necessary elements from the HTML document
 let loginBox = document.getElementById("login-box");
