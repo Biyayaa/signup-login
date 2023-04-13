@@ -32,7 +32,9 @@ function signUpPage() {
 }
 
 // Handle the sign up process
-function signUp() {
+function signUp(e) {
+
+  e.preventDefault()
   // Check if the password and confirm password fields match and the Username and email fields are not empty
   if (
     passwordInput.value === confirmPasswordInput.value &&
@@ -56,17 +58,17 @@ function signUp() {
     // Save the updated array of registered users to localStorage
     localStorage.setItem("members", JSON.stringify(registeredUsers));
 
-    // Display a success message and hide the sign up box after 3 seconds
+    // Display a success message and hide the sign up box after 2 seconds
+    loadingDiv.style.display = "block";
     signUpMessage.innerHTML = `
       <p id="success-msg">Sign up successful!!!</p>
     `;
-    loadingDiv.style.display = "block";
     setTimeout(() => {
       signUpBox.style.display = "none";
       loginBox.style.display = "block";
       loadingDiv.style.display = "none";
       signUpMessage.style.display = "none";
-    }, 3000);
+    }, 2000);
 
     // Clear the input fields
     userNameInput.value = "";
@@ -85,7 +87,9 @@ function signUp() {
 }
 
 // Handle the login process
-function login() {
+function login(ev) {
+  ev.preventDefault()
+
   // Show the loading div
   loadingDivL.style.display = "block";
 
@@ -127,5 +131,4 @@ function getUserInfo() {
   let currentUser = JSON.parse(localStorage.getItem("currentUser"));
   console.log(currentUser);
 }
-
 getUserInfo();

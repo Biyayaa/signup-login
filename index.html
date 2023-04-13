@@ -10,57 +10,66 @@
 <body>
     <div class="big">
         <div class="small">
-            <div id="sign-up-box">
-                <div class="logo-div">
-                    <h2>Create Account</h2>
-                </div>
-                
-                <form class="all-input">
-                    <div class="input-div">
-                        <input type="text" name="" id="user-name" placeholder="Username" required>
-                        <input type="email" name="" id="user-email" placeholder="Email" required>
-                        <input type="password" name="" id="user-password" placeholder="Password" required>
-                        <input type="password" name="" id="confirm-password" placeholder="Confirm password" required>
+            <form action="">
+                <div id="sign-up-box">
+                    <div class="logo-div">
+                        <h2>Create Account</h2>
                     </div>
-                </form>
-                <div id="signup-msg"></div>
-                <div class="sign-up-btn-div">
-                    <button onclick="signUp()">Sign Up</button>
-                </div>
-                <div class="registered">
-                    <p>Already have an account? <span onclick="loginPage()">Login Here</span></p>
-                </div>
-                <div id="loading-div">
-                    <div class="loader"></i></div>
-                </div>
-            </div>
-
-            <div id="login-box">
-                <div class="logo-div">
-                    <h2>Sign In</h2>
-                </div>
-                
-                <div class="all-input">
-                    <div class="input-div">
-                        <input type="email" name="" id="loginEm" placeholder="Email" required>
-                        <input type="password" name="" id="loginPass" placeholder="Password" required>
+                    
+                    <div class="all-input">
+                        <div class="input-div">
+                            <input type="text" name="" id="user-name" placeholder="Username" required>
+                            <input type="email" name="" id="user-email" placeholder="Email" required>
+                            <input type="password" name="" id="user-password" placeholder="Password" required>
+                            <input type="password" name="" id="confirm-password" placeholder="Confirm password" required>
+                        </div>
+                    </div>
+                    <div id="signup-msg"></div>
+                    <div class="sign-up-btn-div">
+                        <button onclick="signUp(event)">Sign Up</button>
+                    </div>
+                    <div class="registered">
+                        <p>Already have an account? <span onclick="loginPage()">Login Here</span></p>
+                    </div>
+                    <div id="loading-div">
+                        <div class="loader"></i></div>
                     </div>
                 </div>
+            </form>
 
-                <div class="f-password">Forget password?</div>
-                <div id="login-msg"></div>
-                <div class="login-btn-div">
-                    <button type="submit" onclick="login()">Login</button>
+
+            <form action="">
+                <div id="login-box">
+                    <div class="logo-div">
+                        <h2>Sign In</h2>
+                    </div>
+                    
+                    <div class="all-input">
+                        <div class="input-div">
+                            <input type="email" name="" id="loginEm" placeholder="Email" required>
+                            <input type="password" name="" id="loginPass" placeholder="Password" required>
+                        </div>
+                    </div>
+    
+                    <div class="f-password">Forget password?</div>
+                    <div id="login-msg"></div>
+                    <div class="login-btn-div">
+                        <button type="submit" onclick="login(event)">Login</button>
+                    </div>
+    
+                    <div class="registered">
+                        <p>You don't have an account yet? <span onclick="signUpPage()">SignUp Here</span></p>
+                    </div>
+    
+                    <div id="loading-divL">
+                        <div class="loader"></div>
+                    </div>
                 </div>
 
-                <div class="registered">
-                    <p>You don't have an account yet? <span onclick="signUpPage()">SignUp Here</span></p>
-                </div>
+            </form>
+            
 
-                <div id="loading-divL">
-                    <div class="loader"></div>
-                </div>
-            </div>
+            
         </div>
     </div>
 
