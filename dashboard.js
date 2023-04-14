@@ -29,7 +29,6 @@ let postContent = document.getElementById("postContent");
 // Get the array of blog posts from localStorage or create an empty array if it doesn't exist
 let blogPosts = JSON.parse(localStorage.getItem("blogPosts")) || [];
 
-
 // Opens the create post
 function makePost() {
   newPost.style.display = "block";
@@ -47,15 +46,14 @@ function sendPost() {
   };
   blogPosts.push(post);
   localStorage.setItem("blogPosts", JSON.stringify(blogPosts));
-  viewPosts();
+  viewFeed();
 }
 
 // Shows the details of the blog post made
-function viewPosts() {
+function viewFeed() {
   let blogPost = document.getElementById("blogPost");
   let postsHTML = "";
-  for (let i = 0; i < blogPosts.length; i++) {
-    let post = blogPosts[i];
+  blogPosts.forEach((post, i) => {
     postsHTML += `
       <div>
         <h1 class="post-title">${post.title}</h1>
@@ -64,10 +62,9 @@ function viewPosts() {
         <p>Time: ${post.time}</p>
         <p>Likes: ${post.likes}</p>
         <button onclick="likePost(${i})">Like</button>
-        <button onclick="deletePost(${i})">Delete</button>
       </div>
     `;
-  }
+  });
   blogPost.innerHTML = postsHTML;
 
   // Displays the blog posts made
@@ -75,18 +72,54 @@ function viewPosts() {
   newPost.style.display = "none";
 }
 
-// Increments the number of likes for a post
+// Shows the details of the current user's blog posts
+function viewMyPosts() {
+  let blogPost = document.getElementById("blogPost");
+  let postsHTML = "";
+  blogPosts.forEach((post, i) => {
+    if (post.author === currentUser.username) {
+      postsHTML += `
+        <div>
+          <h1 class="post-title">${post.title}</h1>
+          <p>${post.content}</p>
+          <p>Author: ${post.author}</p>
+          <p>Time: ${post.time}</p>
+          <p>Likes: ${post.likes}</p>
+          <button onclick="likePost(${i})">Like</button>
+          <button onclick="deletePost(${i})">Delete</button>
+        </div>
+      `;
+    }
+  });
+  blogPost.innerHTML = postsHTML;
+
+  // Displays the blog posts made
+  blogPost.style.display = "block";
+  newPost.style.display = "none";
+}
+
+// Increments or decrements the number of likes for a post
 function likePost(index) {
-  blogPosts[index].likes++;
+  let post = blogPosts[index];
+  if (!post.likesBy) {
+    post.likesBy = [];
+  }
+  if (post.likesBy.includes(currentUser.username)) {
+    post.likes--;
+    post.likesBy.splice(post.likesBy.indexOf(currentUser.username), 1);
+  } else {
+    post.likes++;
+    post.likesBy.push(currentUser.username);
+  }
   localStorage.setItem("blogPosts", JSON.stringify(blogPosts));
-  viewPosts();
+  viewFeed();
 }
 
 // Deletes a post
 function deletePost(index) {
   blogPosts.splice(index, 1);
   localStorage.setItem("blogPosts", JSON.stringify(blogPosts));
-  viewPosts();
+  viewMyPosts();
 }
 
 // Handle the logout process

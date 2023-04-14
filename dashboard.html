@@ -14,8 +14,9 @@
 
       <div class="top-navs">
         <button onclick="makePost()">Post</button>
-        <button onclick="viewPosts()">View posts</button>
-        <button>View liked</button>
+        <button onclick="viewFeed()">Feed</button>
+        <button onclick="viewMyPosts()">My Posts</button>
+        <button>View Liked</button>
       </div>
 
       <div id="newPost">
@@ -23,15 +24,13 @@
           <input id="postTitleInput" type="text" placeholder="Title" />
         </div>
         <div>
-          <textarea name="" id="postContent" cols="30" rows="10" placeholder="Enter blog content..." ></textarea>
+          <textarea name="" id="postContent" cols="30" rows="10" placeholder="Enter blog content..."></textarea>
         </div>
 
         <button onclick="sendPost()">Post</button>
       </div>
 
-      <div id="blogPost">
-          
-      </div>
+      <div id="blogPost"></div>
 
       <div>
         <button id="logout-btn">Log Out</button>
