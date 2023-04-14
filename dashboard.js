@@ -144,3 +144,6 @@ logoutBtn.addEventListener("click", () => {
   localStorage.removeItem("currentUser");
   window.location.href = "index.html";
 });
+
+// Show the feed page on load
+viewFeed();
