@@ -1,41 +1,40 @@
+// Get references to HTML elements
 let dashboard = document.getElementById("dashboard");
-
 let dashboardWelcome = document.getElementById("welcome");
-
-// Get the welcome div and the logout button
 let welcomeDiv = document.getElementById("welcome");
 let logoutBtn = document.getElementById("logout-btn");
 
-// Get the current user information from localStorage
+// Get the current user from local storage
 let currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
-// If there is no current user, redirect to the login page
+// Check if the user is logged in, redirect to login page if not
 if (!currentUser) {
-  alert("you are not authorized to view this page, log in first");
-  dashboard.style.display = "none";
+  alert("You are not authorized to view this page. Please log in first.");
   window.location.href = "index.html";
 }
 
-// Display the welcome message with the current user's name
+// Display a welcome message with the user's username
 dashboardWelcome.innerHTML = `Welcome, ${currentUser.username}!`;
 
-// Hides the blogPost page on log in
+// Get references to HTML elements for displaying blog posts
+let blogPost = document.getElementById("blogPost");
 blogPost.style.display = "none";
 
+// Get references to HTML elements for creating new blog posts
 let newPost = document.getElementById("newPost");
 let postTitleInput = document.getElementById("postTitleInput");
 let postContent = document.getElementById("postContent");
 
-// Get the array of blog posts from localStorage or create an empty array if it doesn't exist
+// Get the list of blog posts from local storage, or create an empty array if none exists
 let blogPosts = JSON.parse(localStorage.getItem("blogPosts")) || [];
 
-// Opens the create post
+// Function to display the form for creating a new blog post
 function makePost() {
   newPost.style.display = "block";
   blogPost.style.display = "none";
 }
 
-// Creates the post and opens view posts
+// Function to create a new blog post and add it to the list of posts
 function sendPost() {
   let post = {
     title: postTitleInput.value,
@@ -49,56 +48,75 @@ function sendPost() {
   viewFeed();
 }
 
-// Shows the details of the blog post made
+// Function to display all blog posts
 function viewFeed() {
-  let blogPost = document.getElementById("blogPost");
   let postsHTML = "";
   blogPosts.forEach((post, i) => {
+    let likeBtnText = post.likesBy && post.likesBy.includes(currentUser.username) ? "Unlike" : "Like";
     postsHTML += `
       <div>
         <h1 class="post-title">${post.title}</h1>
         <p>${post.content}</p>
         <p>Author: ${post.author}</p>
         <p>Time: ${post.time}</p>
-        <p>Likes: ${post.likes}</p>
-        <button onclick="likePost(${i})">Like</button>
+        <p>Likes: <span id="likes-${i}">${post.likes}</span></p>
+        <button onclick="likePost(${i})">${likeBtnText}</button>
       </div>
     `;
   });
   blogPost.innerHTML = postsHTML;
-
-  // Displays the blog posts made
   blogPost.style.display = "block";
   newPost.style.display = "none";
 }
 
-// Shows the details of the current user's blog posts
+// Function to display only the current user's blog posts
 function viewMyPosts() {
-  let blogPost = document.getElementById("blogPost");
   let postsHTML = "";
   blogPosts.forEach((post, i) => {
     if (post.author === currentUser.username) {
+      let likeBtnText = post.likesBy && post.likesBy.includes(currentUser.username) ? "Unlike" : "Like";
       postsHTML += `
         <div>
           <h1 class="post-title">${post.title}</h1>
           <p>${post.content}</p>
           <p>Author: ${post.author}</p>
           <p>Time: ${post.time}</p>
-          <p>Likes: ${post.likes}</p>
-          <button onclick="likePost(${i})">Like</button>
+          <p>Likes: <span id="likes-${i}">${post.likes}</span></p>
+          <button onclick="likePost(${i})">${likeBtnText}</button>
           <button onclick="deletePost(${i})">Delete</button>
         </div>
       `;
     }
   });
   blogPost.innerHTML = postsHTML;
-
-  // Displays the blog posts made
   blogPost.style.display = "block";
   newPost.style.display = "none";
 }
 
-// Increments or decrements the number of likes for a post
+// Function to display only the blog posts that the current user has liked
+function viewLikedPosts() {
+  let postsHTML = "";
+  blogPosts.forEach((post, i) => {
+    if (post.likesBy && post.likesBy.includes(currentUser.username)) {
+      let likeBtnText = "Unlike";
+      postsHTML += `
+        <div>
+          <h1 class="post-title">${post.title}</h1>
+          <p>${post.content}</p>
+          <p>Author: ${post.author}</p>
+          <p>Time: ${post.time}</p>
+          <p>Likes: <span id="likes-${i}">${post.likes}</span></p>
+          <button onclick="likePost(${i})">${likeBtnText}</button>
+        </div>
+      `;
+    }
+  });
+  blogPost.innerHTML = postsHTML;
+  blogPost.style.display = "block";
+  newPost.style.display = "none";
+}
+
+// function to like or unlike post
 function likePost(index) {
   let post = blogPosts[index];
   if (!post.likesBy) {
@@ -112,19 +130,17 @@ function likePost(index) {
     post.likesBy.push(currentUser.username);
   }
   localStorage.setItem("blogPosts", JSON.stringify(blogPosts));
-  viewFeed();
+  document.getElementById(`likes-${index}`).innerHTML = post.likes;
 }
 
-// Deletes a post
 function deletePost(index) {
   blogPosts.splice(index, 1);
   localStorage.setItem("blogPosts", JSON.stringify(blogPosts));
   viewMyPosts();
 }
 
-// Handle the logout process
+// logs out current user
 logoutBtn.addEventListener("click", () => {
-  // Remove the current user from localStorage and redirect to the login page
   localStorage.removeItem("currentUser");
   window.location.href = "index.html";
 });
