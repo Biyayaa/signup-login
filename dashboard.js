@@ -45,6 +45,8 @@ function sendPost() {
   };
   blogPosts.push(post);
   localStorage.setItem("blogPosts", JSON.stringify(blogPosts));
+  postTitleInput.value = "";
+  postContent.value = "";
   viewFeed();
 }
 
