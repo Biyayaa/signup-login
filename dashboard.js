@@ -51,29 +51,10 @@ function sendPost() {
 // Function to display all blog posts
 function viewFeed() {
   let postsHTML = "";
-  blogPosts.forEach((post, i) => {
-    let likeBtnText = post.likesBy && post.likesBy.includes(currentUser.username) ? "Unlike" : "Like";
-    postsHTML += `
-      <div>
-        <h1 class="post-title">${post.title}</h1>
-        <p>${post.content}</p>
-        <p>Author: ${post.author}</p>
-        <p>Time: ${post.time}</p>
-        <p>Likes: <span id="likes-${i}">${post.likes}</span></p>
-        <button onclick="likePost(${i})">${likeBtnText}</button>
-      </div>
-    `;
-  });
-  blogPost.innerHTML = postsHTML;
-  blogPost.style.display = "block";
-  newPost.style.display = "none";
-}
-
-// Function to display only the current user's blog posts
-function viewMyPosts() {
-  let postsHTML = "";
-  blogPosts.forEach((post, i) => {
-    if (post.author === currentUser.username) {
+  if (blogPosts.length === 0) {
+    postsHTML = "<p>No posts made.</p>";
+  } else {
+    blogPosts.forEach((post, i) => {
       let likeBtnText = post.likesBy && post.likesBy.includes(currentUser.username) ? "Unlike" : "Like";
       postsHTML += `
         <div>
@@ -83,11 +64,42 @@ function viewMyPosts() {
           <p>Time: ${post.time}</p>
           <p>Likes: <span id="likes-${i}">${post.likes}</span></p>
           <button onclick="likePost(${i})">${likeBtnText}</button>
-          <button onclick="deletePost(${i})">Delete</button>
         </div>
       `;
+    });
+  }
+  blogPost.innerHTML = postsHTML;
+  blogPost.style.display = "block";
+  newPost.style.display = "none";
+}
+
+// Function to display only the current user's blog posts
+function viewMyPosts() {
+  let postsHTML = "";
+  if (blogPosts.length === 0) {
+    postsHTML = `<button onclick="makePost()">Make a post</button>`;
+  } else {
+    blogPosts.forEach((post, i) => {
+      if (post.author === currentUser.username) {
+        let likeBtnText = post.likesBy && post.likesBy.includes(currentUser.username) ? "Unlike" : "Like";
+        postsHTML += `
+          <div>
+            <h1 class="post-title">${post.title}</h1>
+            <p>${post.content}</p>
+            <p>Author: ${post.author}</p>
+            <p>Time: ${post.time}</p>
+            <p>Likes: <span id="likes-${i}">${post.likes}</span></p>
+            <button onclick="likePost(${i})">${likeBtnText}</button>
+            <button onclick="deletePost(${i})">Delete</button>
+          </div>
+        `;
+      }
+    });
+    if (postsHTML === "") {
+      postsHTML = "<p>You have not made any posts.</p>";
     }
-  });
+    postsHTML += `<button onclick="makePost()">Create a post</button>`;
+  }
   blogPost.innerHTML = postsHTML;
   blogPost.style.display = "block";
   newPost.style.display = "none";
@@ -96,21 +108,28 @@ function viewMyPosts() {
 // Function to display only the blog posts that the current user has liked
 function viewLikedPosts() {
   let postsHTML = "";
-  blogPosts.forEach((post, i) => {
-    if (post.likesBy && post.likesBy.includes(currentUser.username)) {
-      let likeBtnText = "Unlike";
-      postsHTML += `
-        <div>
-          <h1 class="post-title">${post.title}</h1>
-          <p>${post.content}</p>
-          <p>Author: ${post.author}</p>
-          <p>Time: ${post.time}</p>
-          <p>Likes: <span id="likes-${i}">${post.likes}</span></p>
-          <button onclick="likePost(${i})">${likeBtnText}</button>
-        </div>
-      `;
+  if (blogPosts.length === 0) {
+    postsHTML = "<p>No liked posts.</p>";
+  } else {
+    let likedPosts = blogPosts.filter(post => post.likesBy && post.likesBy.includes(currentUser.username));
+    if (likedPosts.length === 0) {
+      postsHTML = "<p>You have not liked any posts.</p>";
+    } else {
+      likedPosts.forEach((post, i) => {
+        let likeBtnText = "Unlike";
+        postsHTML += `
+          <div>
+            <h1 class="post-title">${post.title}</h1>
+            <p>${post.content}</p>
+            <p>Author: ${post.author}</p>
+            <p>Time: ${post.time}</p>
+            <p>Likes: <span id="likes-${i}">${post.likes}</span></p>
+            <button onclick="likePost(${i})">${likeBtnText}</button>
+          </div>
+        `;
+      });
     }
-  });
+  }
   blogPost.innerHTML = postsHTML;
   blogPost.style.display = "block";
   newPost.style.display = "none";
