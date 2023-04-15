@@ -75,7 +75,7 @@ button:hover {
   color: var(--secondary-color);
 }
 
-.top-navs button.active {
+.top-navs button:focus {
   background-color: #388e3c;
   color: var(--secondary-color);
 }
@@ -174,4 +174,10 @@ button:hover {
   top: 20px;
   right: 20px;
   background-color: var(--accent-color)
+}
+
+
+#postinfo{
+  display: flex;
+  justify-content: space-between;
 }

@@ -62,10 +62,12 @@ function viewFeed() {
         <div>
           <h1 class="post-title">${post.title}</h1>
           <p>${post.content}</p>
+          <div id="postinfo">
           <p>Author: ${post.author}</p>
           <p>Time: ${post.time}</p>
           <p>Likes: <span id="likes-${i}">${post.likes}</span></p>
-          <button onclick="likePost(${i})">${likeBtnText}</button>
+          <button onclick="likePost(${i})">${likeBtnText}</button></div>
+          
         </div>
       `;
     });
