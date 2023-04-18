@@ -26,12 +26,14 @@
         <div>
           <textarea name="" id="postContent" cols="30" rows="10" placeholder="Enter blog content..."></textarea>
         </div>
-
+      
         <div>
-          <input id="file" onchange="pickfile()" type="file">
-        <img id="myImg" src="" alt="">
+          <button id="attach-image-btn" onclick="toggleImageInput()">Attach Image</button>
+          <input id="file" onchange="previewImage()" type="file">
+          <img id="previewImg" src="" alt="">
+          <button id="delete-image-btn" onclick="deleteImage()">Delete Image</button>
         </div>
-
+      
         <button onclick="sendPost()">Send</button>
       </div>
 

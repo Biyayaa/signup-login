@@ -189,3 +189,7 @@ button:hover {
 .post-image {
   width: 70%;
 }
+
+#previewImg{
+  width: 300px;
+}
