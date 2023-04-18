@@ -186,6 +186,6 @@ button:hover {
   text-align: center;
 }
 
-#myImg {
-  width: 300px;
+.post-image {
+  width: 70%;
 }

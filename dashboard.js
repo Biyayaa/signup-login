@@ -52,6 +52,7 @@ function pickfile() {
   }
 }
 
+
 // Function to create a new blog post and add it to the list of posts
 function sendPost() {
   let post = {
@@ -71,6 +72,7 @@ function sendPost() {
 }
 
 // Function to display all blog posts
+// Function to display all blog posts
 function viewFeed() {
   let postsHTML = "";
   if (blogPosts.length === 0) {
@@ -81,7 +83,7 @@ function viewFeed() {
         post.likesBy && post.likesBy.includes(currentUser.username)
           ? "Unlike"
           : "Like";
-          let imageHTML = post.image ? `<img src="${post.image}" alt="Post image">` : "";
+      let imageHTML = post.image ? `<img src="${post.image}" alt="Post image" class="post-image">` : "";
       postsHTML += `
         <div id="postdata">
           <h1 class="post-title">${post.title}</h1>
