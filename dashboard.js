@@ -90,6 +90,7 @@ function deleteImage() {
 // Function to create a new blog post and add it to the list of posts
 function sendPost() {
   let fileInput = document.getElementById("file");
+  let previewImg = document.getElementById("previewImg");
   let post = {
     title: postTitleInput.value,
     content: postContent.value,
@@ -107,6 +108,8 @@ function sendPost() {
       postTitleInput.value = "";
       postContent.value = "";
       fileInput.value = "";
+      toggleImageInput();
+      // previewImg.style.display = "none";
       viewFeed();
     };
     reader.readAsDataURL(fileInput.files[0]);
@@ -116,7 +119,6 @@ function sendPost() {
     postTitleInput.value = "";
     postContent.value = "";
     fileInput.value = "";
-    previewImg.style.display = "none";
     viewFeed();
   }
 }
