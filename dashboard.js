@@ -34,6 +34,24 @@ function makePost() {
   blogPost.style.display = "none";
 }
 
+// function to attach picture to the blog post
+let myFiles = document.getElementById("file");
+let myImg = document.getElementById("myImg");
+function pickfile() {
+  let reader = new FileReader();
+  let fileData = myFiles.files[0];
+  console.log(myFiles.files);
+  reader.addEventListener("load", (e) => {
+    myImg.src = e.target.result;
+    console.log(e.target.result);
+  });
+
+  if (fileData) {
+    let myUrl = reader.readAsDataURL(fileData);
+    console.log(myUrl);
+  }
+}
+
 // Function to create a new blog post and add it to the list of posts
 function sendPost() {
   let post = {
@@ -41,12 +59,14 @@ function sendPost() {
     content: postContent.value,
     author: currentUser.username,
     time: new Date().toLocaleString(),
-    likes: 0
+    likes: 0,
+    image: myImg.src
   };
   blogPosts.push(post);
   localStorage.setItem("blogPosts", JSON.stringify(blogPosts));
   postTitleInput.value = "";
   postContent.value = "";
+  myImg.src="";
   viewFeed();
 }
 
@@ -57,17 +77,21 @@ function viewFeed() {
     postsHTML = "<p>No posts made.</p>";
   } else {
     blogPosts.forEach((post, i) => {
-      let likeBtnText = post.likesBy && post.likesBy.includes(currentUser.username) ? "Unlike" : "Like";
+      let likeBtnText =
+        post.likesBy && post.likesBy.includes(currentUser.username)
+          ? "Unlike"
+          : "Like";
+          let imageHTML = post.image ? `<img src="${post.image}" alt="Post image">` : "";
       postsHTML += `
-        <div>
+        <div id="postdata">
           <h1 class="post-title">${post.title}</h1>
           <p>${post.content}</p>
+          ${imageHTML}
           <div id="postinfo">
           <p>Author: ${post.author}</p>
           <p>Time: ${post.time}</p>
           <p>Likes: <span id="likes-${i}">${post.likes}</span></p>
           <button onclick="likePost(${i})">${likeBtnText}</button></div>
-          
         </div>
       `;
     });
@@ -85,7 +109,10 @@ function viewMyPosts() {
   } else {
     blogPosts.forEach((post, i) => {
       if (post.author === currentUser.username) {
-        let likeBtnText = post.likesBy && post.likesBy.includes(currentUser.username) ? "Unlike" : "Like";
+        let likeBtnText =
+          post.likesBy && post.likesBy.includes(currentUser.username)
+            ? "Unlike"
+            : "Like";
         postsHTML += `
           <div>
             <h1 class="post-title">${post.title}</h1>
@@ -115,7 +142,9 @@ function viewLikedPosts() {
   if (blogPosts.length === 0) {
     postsHTML = "<p>No liked posts.</p>";
   } else {
-    let likedPosts = blogPosts.filter(post => post.likesBy && post.likesBy.includes(currentUser.username));
+    let likedPosts = blogPosts.filter(
+      (post) => post.likesBy && post.likesBy.includes(currentUser.username)
+    );
     if (likedPosts.length === 0) {
       postsHTML = "<p>You have not liked any posts.</p>";
     } else {
